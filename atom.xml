@@ -1,19 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://Hunter-x-Hunter011.github.io</id>
+    <id>https://hunter011.github.io</id>
     <title>Gridea</title>
-    <updated>2020-03-11T06:52:21.219Z</updated>
+    <updated>2020-03-11T13:47:06.404Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://Hunter-x-Hunter011.github.io"/>
-    <link rel="self" href="https://Hunter-x-Hunter011.github.io/atom.xml"/>
+    <link rel="alternate" href="https://hunter011.github.io"/>
+    <link rel="self" href="https://hunter011.github.io/atom.xml"/>
     <subtitle>温故而知新</subtitle>
-    <logo>https://Hunter-x-Hunter011.github.io/images/avatar.png</logo>
-    <icon>https://Hunter-x-Hunter011.github.io/favicon.ico</icon>
+    <logo>https://hunter011.github.io/images/avatar.png</logo>
+    <icon>https://hunter011.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Gridea</rights>
     <entry>
+        <title type="html"><![CDATA[StringTable-01]]></title>
+        <id>https://hunter011.github.io/post/stringtable-01/</id>
+        <link href="https://hunter011.github.io/post/stringtable-01/">
+        </link>
+        <updated>2020-03-11T13:44:24.000Z</updated>
+        <content type="html"><![CDATA[<p>##2.是什么<br>
+嘻嘻嘻嘻嘻  发的发的发</p>
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[Hello Gridea]]></title>
-        <id>https://Hunter-x-Hunter011.github.io/post/hello-gridea/</id>
-        <link href="https://Hunter-x-Hunter011.github.io/post/hello-gridea/">
+        <id>https://hunter011.github.io/post/hello-gridea/</id>
+        <link href="https://hunter011.github.io/post/hello-gridea/">
         </link>
         <updated>2018-12-11T16:00:00.000Z</updated>
         <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
