@@ -2,22 +2,23 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>StringTable-01 | Gridea</title>
-<link rel="shortcut icon" href="https://hunter011.github.io/favicon.ico?v=1583936232837">
+<title>StringTable-认知一 | Gridea</title>
+<link rel="shortcut icon" href="https://hunter011.github.io/favicon.ico?v=1583995687174">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://hunter011.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="StringTable-01 | Gridea - Atom Feed" href="https://hunter011.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="StringTable-认知一 | Gridea - Atom Feed" href="https://hunter011.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="##2.是什么
-嘻嘻嘻嘻嘻  发的发的发
-
-
-
-https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/res.png
-https://github.com/hunter01..." />
+    <meta name="description" content="1.字符串今生前世
+1.1 如何出生
+字符串有六种基本的创建(出生)式
+■使用char[]数组配合new来创建
+■使用byte[]数组配合new来创建
+■使用int[]数组配合new来创建
+■使用已有字符串配合new来创建
+■使用字面量创建..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -27,7 +28,7 @@ https://github.com/hunter01..." />
       <div class="main-content">
         <div class="site-header">
   <a href="https://hunter011.github.io">
-  <img class="avatar" src="https://hunter011.github.io/images/avatar.png?v=1583936232837" alt="">
+  <img class="avatar" src="https://hunter011.github.io/images/avatar.png?v=1583995687174" alt="">
   </a>
   <h1 class="site-title">
     Gridea
@@ -80,27 +81,224 @@ https://github.com/hunter01..." />
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              StringTable-01
+              StringTable-认知一
             </h2>
             <div class="post-info">
               <span>
                 2020-03-11
               </span>
               <span>
-                1 min read
+                9 min read
               </span>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>##2.是什么<br>
-嘻嘻嘻嘻嘻  发的发的发<br>
-<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/res.png" alt="图片" loading="lazy"></p>
-<p><img src="https://hunter011.github.io/post-images/1583936178060.png" alt="" loading="lazy"><br>
-<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/res.png" alt="" loading="lazy"><br>
-https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/res.png<br>
-https://github.com/hunter011/Pic_PicGo/blob/master/res.png</p>
+                <p>1.字符串今生前世</p>
+<p>1.1 如何出生</p>
+<p>字符串有六种基本的创建(出生)式<br>
+■使用char[]数组配合new来创建<br>
+■使用byte[]数组配合new来创建<br>
+■使用int[]数组配合new来创建<br>
+■使用已有字符串配合new来创建<br>
+■使用字面量创建(不使用new )<br>
+合二为一，使用+运算符来拼接创建</p>
+<p>可以看到，至少从表面上讲，后两种都没有用到new关键字</p>
+<p>1.2 char[]数组创建</p>
+<p>这种是最基本的，因为字符串、就是将字符串起来，结果呢，也就是多个字符的char[]数组，例如</p>
+<pre><code>String str = new String(new char[]{'a','b','c'});
+</code></pre>
+<p>它的内部结构如下<br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200302230516332.png" alt="" loading="lazy"><br>
+其中97其实就是'a'，98 其实就是'b'，99 其实就是'c'</p>
+<p>1.3 byte[]数组创建</p>
+<p>有同学会问，什么时候会根据byte[]数组来创建字符串呢?<br>
+答案是，从网络传递过来的数据，或是IO读取到的数据，都有从byte[]转为字符串的需求<br>
+例如</p>
+<pre><code>String s = new String(new byte[]{97,98,99});
+</code></pre>
+<p>其中new byte[]{97, 98, 99}就可以是<br>
+■从网络(例如一一个浏览器的http请求)传递过来的字节数据<br>
+■也可以是从IO (例如从一一个文本文件)读取到的数据</p>
+<p>它的内部结构是<br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200302231157089.png" alt="" loading="lazy"><br>
+这时byte[]会在构造时被转换为char[]</p>
+<p>其中byte[]和char []]的结构如下</p>
+<p><img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200303090252344.png" alt="" loading="lazy"><br>
+看到上幅图有同学会说，对于byte[]转换为char[]，97 还是对应97, 98 还是对应98, 99 还是对应99啊，看<br>
+不出byte[]和char[]的任何区别啊?你要知道，首先他们的大小不-样，其次上面的char[]中的97 (a) ,<br>
+98 (b) ，99 (c)都属于拉丁字符集，如果用到其它字符集，那么结果就不一样了,看下面的例子</p>
+<pre><code>new String(
+    new byte[]{(byte)0xD5,(byte)0xC5},
+    Charset.forName(&quot;gbk&quot;)
+)
+</code></pre>
+<p>这时<br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200303095150320.png" alt="" loading="lazy"><br>
+其中两个byte 0xD5和0xC5被转换成了一一个char 0x5F20 (汉字[张] )</p>
+<p>例2，按utf-8字符集转换<br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200303183554928.png" alt="" loading="lazy"><br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200303183604883.png" alt="" loading="lazy"></p>
+<p>其中三个byte 0xE5, 0xBC 和0xA0被转换成了一个char 0x5F20 (汉字[张] )</p>
+<p>其实java中的char字符都是以unicode编码的,从外界不同的编码(如gbk, utf-8) 传过来的byte[]最终到<br>
+java中的char都统一了</p>
+<p>1.4 int[]数组创建</p>
+<p>有时候我们还需要用两个char 表示-一个字符，比如这个<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200303184629988.png" alt="" loading="lazy"><br>
+笑哭的字符，它用unicode 编码表示为<br>
+0x1F602，存储范围已经超过了char 能表示的最大值0xFFFF,因此需要使用int[]来构造这样的字符串，如下<br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200303184655186.png" alt="" loading="lazy"><br>
+解释：0表示从数组的0位开始读取，1表示转换为1个Unicode编码<br>
+转换过程如图所示:<br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200303184722034.png" alt="" loading="lazy"><br>
+1.5 从已有字符串创建<br>
+查看源码：<br>
+public String(String original) {<br>
+this.value = original.value;<br>
+this.hash = original.hash;<br>
+}</p>
+<p>这种最为简单，但要注意是两个字符串对象引用同一个char[]对象</p>
+<pre><code>String s1 = new String(new char[]{'a','b','c'});
+String s2 = new String(s1);
+</code></pre>
+<p>内存结构如下：<br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200304100324228.png" alt="" loading="lazy"><br>
+1.6字面量创建<br>
+以上四种创建方式，大家用的实际上相对少-点，最熟悉的是这种字面量的方式:<br>
+public static void main(String[] args) {<br>
+int i = 10;<br>
+String s = &quot;abc&quot;;<br>
+}<br>
+&quot;abc&quot;被叫做字符串字面量 (英文Literal)， 但恰恰是这种方式其实奥妙最多，我总结了三点:非对象、懒加载、不重复。来逐一看一下</p>
+<p>非对象</p>
+<p>严格地说，字面量在代码运行到它所在语句之前，它还不是字符串对象<br>
+要理解从字面量变成字符串对象的过程，需要从字节码的角度来分析</p>
+<p>在上面的java代码被编译为class文件后，&quot;abc&quot; 存储于[类文件常量池]中<br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200304104853825.png" alt="" loading="lazy"><br>
+当class完成类加载之后，&quot;abe&quot; 这个字面量被存储于[运行时常量池] (归属于方法区)<br>
+中，其中#l #2都会被翻译为运行时真正的内存地址</p>
+<p>再看一下class中main方法的字节码<br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200304105020204.png" alt="" loading="lazy"><br>
+将来main方法被调用时，就会执行里面的字节码指令<br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200304122320683.png" alt="" loading="lazy"></p>
+<p>懒加载</p>
+<p>当第一-次用到 &quot;abc&quot;字面量时(也就是执行到1dc #2时)才会创建对应的字符串对象</p>
+<p>如何验证呢？</p>
+<p>有如下代码<br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200304122537265.png" alt="" loading="lazy"><br>
+可以给每行语句加上断点，然后用idea的debug界面中的memory I具来查看字符串对象的数量<br>
+刚开始在断点1处,它类中创建的字符串对象有2411个<br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200304124301773.png" alt="" loading="lazy"><br>
+执行到断点2处，这时新创建了&quot;1&quot;对应的字符串对象，个数为2412</p>
+<p>不重复</p>
+<p>同一个类中的值相同字面量，实只有一份<br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200304131622707.png" alt="" loading="lazy"><br>
+常量池：<br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200304131649462.png" alt="" loading="lazy"><br>
+对应字节码<br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200304131823477.png" alt="" loading="lazy"></p>
+<p>可以看到&quot;abc&quot;这个字面量虽然出现了2次，但实际上都是对应着常量池中#2这个地址</p>
+<p>如果是不同类中的&quot;abc&quot;呢? [类文件常量池] 包括[运行时常量池]都是以类为单位的</p>
+<p>例如，	另一个类中<br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200304131933790.png" alt="" loading="lazy"><br>
+对应常量池;<br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200304132008649.png" alt="" loading="lazy"><br>
+可以看到在这个类中，&quot;abc&quot; 对应的常量池的编号是#3,与TestStringl中的已经不同</p>
+<p>这时候[字面量]是两份,而[字符串对象]会有几个呢?<br>
+我们来做个实验，把刚才的代码做个改写<br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200304132203114.png" alt="" loading="lazy"><br>
+运行结果<br>
+true<br>
+true</p>
+<p>1.7拼接字符串</p>
+<p>最后还可以通过+运算符将两个字符串(其中-个也可以是其它类型)拼接为一个新字符串，例如<br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200304132527325.png" alt="" loading="lazy"><br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200304132535616.png" alt="" loading="lazy"></p>
+<p>有同学会问，例1与例2与例3不同吗?还别说，真就不同,其中例1与例2原理是- -样的，例3与例4原理是<br>
+-样的，反编译- 下<br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200304132922233.png" alt="" loading="lazy"><br>
+可以看到，其实并没有真正的[拼接]操作发生，从源码编译为字节码时，javac 就E经把&quot;a&quot;和&quot;b&quot;串在一<br>
+起了，这是一种编译期的优化处理<br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200304133021681.png" alt="" loading="lazy"><br>
+可以看到，还是没有真正的[拼接]操作发生，final 意味着x的值不可改变,因此其它引用x的地方都可以<br>
+安全地被替换为&quot;b&quot;，而不用担心x被改变,从源码编译为字节码时，javac 就也进行了优化,把所有出现x<br>
+的地方都替换成为了&quot;b&quot;</p>
+<p>那么，什么是真正的[拼接]操作呢?看一下例3反编译后的结果</p>
+<pre><code>String x = &quot;b&quot;;
+String s = &quot;a&quot;+x;
+</code></pre>
+<p>常量池<br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200304133337795.png" alt="" loading="lazy"><br>
+可以看到常量池中并没有ab字面量<br>
+主方法<br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200304133531929.png" alt="" loading="lazy"><br>
+翻译成人能读懂的就是<br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200304133626447.png" alt="" loading="lazy"><br>
+StringBuilder的tosString()方法又是怎么实现的呢?<br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200304133714059.png" alt="" loading="lazy"><br>
+可以看到，本质上就是根据StringBuilder维护的char[]创建了新的String对象</p>
+<p>1.8 JDK9之后的改变</p>
+<p>前面我们讲的是JDK 8中的字符串，但从JDK 9开始，String 的内部存储方式、以及拼接方式又发生了较大<br>
+的改变<br>
+■不再用char]存储字符，改为了byte[]，目的是更节约内存<br>
+■使用invokedynamic指令扩展了字符串的拼接的实现方式</p>
+<p>内存结构改变<br>
+例如，字符串中仅有拉丁字符</p>
+<pre><code>String s = new String(new byte[]{97,98,99});
+</code></pre>
+<p>例如，字符串中有中文字符</p>
+<pre><code>String s = new String(new byte[]{(byte)0xd5,(byte)0xc5},CharSet.forName(&quot;gbk&quot;));
+</code></pre>
+<p>例如，既有中文又有拉丁字符</p>
+<pre><code>String s= new String(new byte[]{(byte)0xd5,(byte)0xc5,97},Charset.forName(&quot;gbk&quot;))
+</code></pre>
+<p>拼接方式改变</p>
+<p>例如</p>
+<pre><code>public static void main(String[] args) {
+    String x = &quot;b&quot;;
+    String s = &quot;a&quot; + x;
+}
+</code></pre>
+<p>常量池</p>
+<p>主方法</p>
+<p>直接跟invokedynamic对应的字节码比较难，我直接翻译成人能看懂的代码</p>
+<p>案例;</p>
+<p>为什么搞这么麻烦! ! !主要是为了对字符串的拼接做各种扩展优化，多了扩展途径。其中最为重要的是<br>
+IMethodHandle，它使用了策略模式生成，JDK 提供的所有的策略可以在stringConcatFactory . Strategy中<br>
+找到:</p>
+<p>如果想改变策略，可以在运行时添加JVM参数，例如将策略改为BC_ SB</p>
+<p>还有一种选择，是在javac编译时仍使用1.5 的办法拼接字符串，而不是采用invokedynamic,就是在javac<br>
+时加上参数</p>
+<pre><code>-XDstringConcat=inline
+</code></pre>
+<p>默认拼接策略</p>
+<p>默认策略为MH_ INLNE_ SIZED_ EXACT,使用字节数组直接构造出String</p>
+<p>例如下面拼接代码：</p>
+<pre><code>String x=  &quot;b&quot;;
+String s = &quot;a&quot; + x +&quot;c&quot; + &quot;d&quot;
+</code></pre>
+<p>使用了MH NLINE_ SIZED_ EXACT策略后，内部会执行如下等价调用</p>
+<pre><code>注意
+StringConcatHelper对外是不可见的，因此无法直接测试，只能反射测试
+prepend可以直接修改字符串中的bytes属性值，他们都是java.lang包下的
+</code></pre>
+<p>模仿BC_SB策略</p>
+<p>接下来我模拟其中一种策略的实现过程:以字节码指令生成拼接方法为例<br>
+先说明一下我的目的</p>
+<pre><code>String x = &quot;hello&quot;;
+String y = &quot;world&quot;;
+String s = x + y;
+</code></pre>
+<p>其中+可以被invokedynamic优化为多种实现策略，如果让我自己来实现，我仅会用StringBuilder来拼接，<br>
+因此我希望x+y能够被翻译为对下面方法的调用</p>
+<pre><code>public static void main(String[] args) {
+    return new StringBuilder().append(x).append(y).toString();
+}
+</code></pre>
+<p>1.方法手动生成</p>
+<p>提供一个拼接方法</p>
+<p>2.字节码生成方式</p>
+<p>使用ASM byte outline插件</p>
 
               </div>
               <div class="toc-container">
