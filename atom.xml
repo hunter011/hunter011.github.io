@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://hunter011.github.io</id>
     <title>Gridea</title>
-    <updated>2020-03-12T06:48:54.543Z</updated>
+    <updated>2020-03-13T06:10:53.964Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://hunter011.github.io"/>
     <link rel="self" href="https://hunter011.github.io/atom.xml"/>
@@ -158,8 +158,8 @@ String s = &quot;a&quot;+x;
 StringBuilder的tosString()方法又是怎么实现的呢?<br>
 <img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200304133714059.png" alt="" loading="lazy"><br>
 可以看到，本质上就是根据StringBuilder维护的char[]创建了新的String对象</p>
-<p>1.8 JDK9之后的改变</p>
-<p>前面我们讲的是JDK 8中的字符串，但从JDK 9开始，String 的内部存储方式、以及拼接方式又发生了较大<br>
+<p>1.8 JDK9之后的改变<br>
+前面我们讲的是JDK 8中的字符串，但从JDK 9开始，String 的内部存储方式、以及拼接方式又发生了较大<br>
 的改变<br>
 ■不再用char]存储字符，改为了byte[]，目的是更节约内存<br>
 ■使用invokedynamic指令扩展了字符串的拼接的实现方式</p>
@@ -167,59 +167,62 @@ StringBuilder的tosString()方法又是怎么实现的呢?<br>
 例如，字符串中仅有拉丁字符</p>
 <pre><code>String s = new String(new byte[]{97,98,99});
 </code></pre>
-<p>例如，字符串中有中文字符</p>
-<pre><code>String s = new String(new byte[]{(byte)0xd5,(byte)0xc5},CharSet.forName(&quot;gbk&quot;));
-</code></pre>
-<p>例如，既有中文又有拉丁字符</p>
-<pre><code>String s= new String(new byte[]{(byte)0xd5,(byte)0xc5,97},Charset.forName(&quot;gbk&quot;))
-</code></pre>
-<p>拼接方式改变</p>
-<p>例如</p>
-<pre><code>public static void main(String[] args) {
-    String x = &quot;b&quot;;
-    String s = &quot;a&quot; + x;
-}
-</code></pre>
-<p>常量池</p>
-<p>主方法</p>
-<p>直接跟invokedynamic对应的字节码比较难，我直接翻译成人能看懂的代码</p>
-<p>案例;</p>
-<p>为什么搞这么麻烦! ! !主要是为了对字符串的拼接做各种扩展优化，多了扩展途径。其中最为重要的是<br>
+<p><img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200304140539452.png" alt="" loading="lazy"><br>
+例如，字符串中有中文字符<br>
+String s = new String(new byte[]{(byte)0xd5,(byte)0xc5},CharSet.forName(&quot;gbk&quot;));<br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200304140833792.png" alt="" loading="lazy"><br>
+例如，既有中文又有拉丁字符<br>
+String s= new String(new byte[]{(byte)0xd5,(byte)0xc5,97},Charset.forName(&quot;gbk&quot;))<br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200304141325045.png" alt="" loading="lazy"><br>
+拼接方式改变</p>
+<p>例如<br>
+public static void main(String[] args) {<br>
+String x = &quot;b&quot;;<br>
+String s = &quot;a&quot; + x;<br>
+}<br>
+常量池<br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200304141543753.png" alt="" loading="lazy"><br>
+主方法<br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200304141647753.png" alt="" loading="lazy"><br>
+直接跟invokedynamic对应的字节码比较难，我直接翻译成人能看懂的代码<br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200304141943714.png" alt="" loading="lazy"><br>
+案例;<br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200304142052645.png" alt="" loading="lazy"><br>
+为什么搞这么麻烦! ! !主要是为了对字符串的拼接做各种扩展优化，多了扩展途径。其中最为重要的是<br>
 IMethodHandle，它使用了策略模式生成，JDK 提供的所有的策略可以在stringConcatFactory . Strategy中<br>
-找到:</p>
-<p>如果想改变策略，可以在运行时添加JVM参数，例如将策略改为BC_ SB</p>
-<p>还有一种选择，是在javac编译时仍使用1.5 的办法拼接字符串，而不是采用invokedynamic,就是在javac<br>
-时加上参数</p>
-<pre><code>-XDstringConcat=inline
-</code></pre>
-<p>默认拼接策略</p>
-<p>默认策略为MH_ INLNE_ SIZED_ EXACT,使用字节数组直接构造出String</p>
-<p>例如下面拼接代码：</p>
-<pre><code>String x=  &quot;b&quot;;
-String s = &quot;a&quot; + x +&quot;c&quot; + &quot;d&quot;
-</code></pre>
-<p>使用了MH NLINE_ SIZED_ EXACT策略后，内部会执行如下等价调用</p>
-<pre><code>注意
-StringConcatHelper对外是不可见的，因此无法直接测试，只能反射测试
-prepend可以直接修改字符串中的bytes属性值，他们都是java.lang包下的
-</code></pre>
-<p>模仿BC_SB策略</p>
-<p>接下来我模拟其中一种策略的实现过程:以字节码指令生成拼接方法为例<br>
-先说明一下我的目的</p>
-<pre><code>String x = &quot;hello&quot;;
-String y = &quot;world&quot;;
-String s = x + y;
-</code></pre>
-<p>其中+可以被invokedynamic优化为多种实现策略，如果让我自己来实现，我仅会用StringBuilder来拼接，<br>
-因此我希望x+y能够被翻译为对下面方法的调用</p>
-<pre><code>public static void main(String[] args) {
-    return new StringBuilder().append(x).append(y).toString();
-}
-</code></pre>
-<p>1.方法手动生成</p>
-<p>提供一个拼接方法</p>
-<p>2.字节码生成方式</p>
-<p>使用ASM byte outline插件</p>
+找到:<br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200304142150271.png" alt="" loading="lazy"><br>
+如果想改变策略，可以在运行时添加JVM参数，例如将策略改为BC_ SB<br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200304142530357.png" alt="" loading="lazy"><br>
+还有一种选择，是在javac编译时仍使用1.5 的办法拼接字符串，而不是采用invokedynamic,就是在javac<br>
+时加上参数<br>
+-XDstringConcat=inline</p>
+<p><strong>默认拼接策略</strong><br>
+默认策略为MH_ INLNE_ SIZED_ EXACT,使用字节数组直接构造出String<br>
+例如下面拼接代码：<br>
+String x=  &quot;b&quot;;<br>
+String s = &quot;a&quot; + x +&quot;c&quot; + &quot;d&quot;<br>
+使用了MH NLINE_ SIZED_ EXACT策略后，内部会执行如下等价调用<br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200304143103878.png" alt="" loading="lazy"><br>
+注意<br>
+StringConcatHelper对外是不可见的，因此无法直接测试，只能反射测试<br>
+prepend可以直接修改字符串中的bytes属性值，他们都是java.lang包下的</p>
+<p><strong>模仿BC_SB策略</strong><br>
+接下来我模拟其中一种策略的实现过程:以字节码指令生成拼接方法为例<br>
+先说明一下我的目的<br>
+String x = &quot;hello&quot;;<br>
+String y = &quot;world&quot;;<br>
+String s = x + y;<br>
+其中+可以被invokedynamic优化为多种实现策略，如果让我自己来实现，我仅会用StringBuilder来拼接，<br>
+因此我希望x+y能够被翻译为对下面方法的调用<br>
+public static void main(String[] args) {<br>
+return new StringBuilder().append(x).append(y).toString();<br>
+}<br>
+1.方法手动生成<br>
+提供一个拼接方法<br>
+<img src="https://raw.githubusercontent.com/hunter011/Pic_PicGo/master/image-20200304144734746.png" alt="" loading="lazy"><br>
+2.字节码生成方式<br>
+使用ASM byte outline插件</p>
 ]]></content>
     </entry>
     <entry>
